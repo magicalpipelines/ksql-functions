@@ -22,7 +22,7 @@
 
     <groupId>com.mitchseymour.ksql</groupId>
     <artifactId>summary-stats</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <name>KSQL UDAF for computing summary statistics</name>
