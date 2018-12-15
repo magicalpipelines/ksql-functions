@@ -4,6 +4,12 @@
 The `SUMMARY_STATS` UDAF computes summary statistics (mean, standard deviation, etc) for a stream of data. In this example,
 we assume you have a topic called `api_logs` already created.
 
+# Installation
+Download the [JAR][jar] from Maven Central and copy it to the KSQL extension directory (see [here][main-readme] for more details).
+
+[jar]: https://search.maven.org/artifact/com.mitchseymour/ksql-udaf-summary-stats
+[main-readme]: https://github.com/magicalpipelines/ksql-functions#installation
+
 # Usage
 First, register the stream like so:
 
