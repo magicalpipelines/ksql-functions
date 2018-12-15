@@ -1,8 +1,7 @@
 # Custom KSQL UDFs and UDAFs
-This repository contains custom KSQL UDFs and UDAFs built by [Mitch Seymour][me]. An overview of each
-function, including usage details, can be found in the function's subdirectory.
+This repository contains custom KSQL UDFs and UDAFs built by the [Magical Pipelines][magical-pipelines] team. An overview of each function, including usage details, can be found in the function's subdirectory.
 
-[me]: https://github.com/mitch-seymour
+[magical-pipelines]: https://github.com/orgs/magicalpipelines/people
 
 # Installation
 All of the JARs are deployed to Maven central, and can be viewed [here][maven-central].
