@@ -31,6 +31,12 @@ called `records.txt`:
 {"endpoint": "/search", "response_code": 500, "response_time": 2200}
 ```
 
+To produce the above records to the `api_logs` topic, run the following:
+
+```
+cat records.txt  | kafkacat -q -b localhost:9092 -t api_logs -P -D "\n"
+```
+
 You should see the following query results:
 
 ```
