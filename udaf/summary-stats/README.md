@@ -1,3 +1,5 @@
+[![Maven Central](https://img.shields.io/maven-central/v/com.mitchseymour/ksql-udaf-summary-stats.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.mitchseymour%22%20AND%20a:%22ksql-udaf-summary-stats%22)
+
 # Summary Stats
 The `SUMMARY_STATS` UDAF computes summary statistics (mean, standard deviation, etc) for a stream of data. In this example,
 we assume you have a topic called `api_logs` already created.
