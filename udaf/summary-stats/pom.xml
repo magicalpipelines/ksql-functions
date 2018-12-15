@@ -20,12 +20,39 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.mitchseymour.ksql</groupId>
-    <artifactId>summary-stats</artifactId>
+    <groupId>com.mitchseymour</groupId>
+    <artifactId>ksql-udaf-summary-stats</artifactId>
     <version>0.1.0</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
+    <name>Summary Statistics KSQL UDAF</name>
+    <url>https://github.com/magicalpipelines/ksql-functions</url>
+    <description>KSQL UDAF for computing summary statistics for a stream of data</description>
 
-    <name>KSQL UDAF for computing summary statistics</name>
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <inceptionYear>2018</inceptionYear>
+
+    <scm>
+        <connection>scm:git:https://github.com/magicalpipelines/ksql-functions.git</connection>
+        <developerConnection>scm:git:https://github.com/magicalpipelines/ksql-functions.git</developerConnection>
+        <url>https://github.com/magicalpipelines/ksql-functions</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>Mitch Seymour</name>
+            <email>mitchseymour@gmail.com</email>
+            <timezone>America/New_York</timezone>
+            <url>https://mitchseymour.com/</url>
+        </developer>
+    </developers>
 
     <properties>
         <!-- Dependency versions -->
@@ -36,7 +63,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <!-- encoding -->
+        <!-- Encoding -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -90,6 +117,24 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                        <configuration>
+                        <keyname>${gpg.keyname}</keyname>
+                        <passphraseServerId>${gpg.keyname}</passphraseServerId>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
