@@ -1,2 +1,9 @@
+# build products
 target/
+dist/
+
+# other
+.classpath
+.project
+.settings
 .DS_Store
