@@ -1,4 +1,4 @@
-[![Maven Central](https://img.shields.io/maven-central/v/com.mitchseymour/ksql-udf-sentiment-analysis.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.mitchseymour%22%20AND%20a:%22ksql-udaf-summary-stats%22)
+[![Maven Central](https://img.shields.io/maven-central/v/com.mitchseymour/ksql-udf-sentiment-analysis.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.mitchseymour%22%20AND%20a:%22ksql-udf-sentiment-analysis%22)
 
 # Sentiment Analysis
 The `SENTIMENT` UDF uses the Google Cloud Natural Language API to detect sentiment in a string of text.
