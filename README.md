@@ -25,6 +25,8 @@ ksql> SHOW PROPERTIES ;
  # Custom functions
  Below are the custom functions that are currently available.
  
+ * [`SENTIMENT`][sentiment-analysis]: perform sentiment analysis on streams of text
  * [`SUMMARY_STATS`][summary-stats]: calculate summary statistics (mean, standard deviation, sample size, etc) for streams of data.
  
  [summary-stats]: https://github.com/magicalpipelines/ksql-functions/tree/master/udaf/summary-stats
+ [sentiment-analysis]: https://github.com/magicalpipelines/ksql-functions/tree/master/udf/sentiment-analysis
