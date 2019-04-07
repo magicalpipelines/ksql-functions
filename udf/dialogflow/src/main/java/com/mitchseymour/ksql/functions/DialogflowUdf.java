@@ -1,13 +1,19 @@
 package com.mitchseymour.ksql.functions;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Map;
 
+import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.dialogflow.v2.DetectIntentResponse;
 import com.google.cloud.dialogflow.v2.QueryInput;
 import com.google.cloud.dialogflow.v2.SessionName;
 import com.google.cloud.dialogflow.v2.SessionsClient;
 import com.google.cloud.dialogflow.v2.TextInput;
 import com.google.cloud.dialogflow.v2.TextInput.Builder;
+import com.google.common.collect.Lists;
+import com.google.cloud.dialogflow.v2.SessionsSettings;
 
 import io.confluent.common.Configurable;
 import io.confluent.ksql.function.udf.Udf;
@@ -25,6 +31,7 @@ public class DialogflowUdf implements Configurable {
 
   private String projectId = "";
   private String languageCode = "en-US";
+  private SessionsSettings sessionSettings;
 
 @Override
 public void configure(final Map<String, ?> map) {
@@ -37,6 +44,28 @@ public void configure(final Map<String, ?> map) {
   if (map.containsKey(CONFIG_PREFIX + "language.code")) {
     this.languageCode = (String) map.get(CONFIG_PREFIX + "language.code");
   }
+
+   // check to see if we should pull GCP service account credentials from a file
+  try {
+    if (!map.containsKey(CONFIG_PREFIX + "credentials.file")) {
+      // no credentials file. this is okay if the creds were set via:
+      // export GOOGLE_APPLICATION_CREDENTIALS=/path/to/creds.json
+      sessionSettings = SessionsSettings.newBuilder().build();
+      return;
+    }
+
+    // a credentials file was provided
+    final String path = (String) map.get(CONFIG_PREFIX + "credentials.file");
+    GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(path))
+        .createScoped(Lists.newArrayList("https://www.googleapis.com/auth/cloud-platform"));
+
+    sessionSettings = SessionsSettings.newBuilder()
+        .setCredentialsProvider(FixedCredentialsProvider.create(credentials))
+        .build();
+
+    } catch (IOException io) {
+      throw new RuntimeException("Could not read Google credentials file");
+    }
 }
 
 @Udf(description = "Detect the sentiment of a string of text")
@@ -52,7 +81,8 @@ public String reply(
 
 public String getFulfillmentText(final String text, final String sessionId) {
     // Instantiate a client
-    try (SessionsClient sessionsClient = SessionsClient.create()) {
+    // TODO: should we reuse this client?
+    try (SessionsClient sessionsClient = SessionsClient.create(sessionSettings)) {
       // Set the session name using the sessionId (UUID) and projectID (my-project-id)
       SessionName session = SessionName.of(projectId, sessionId);
 
