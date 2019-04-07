@@ -1,4 +1,4 @@
-[![Maven Central](https://img.shields.io/maven-central/v/com.mitchseymour/ksql-udf-dialogflow.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.mitchseymour%22%20AND%20a:%22ksql-udf-sentiment-analysis%22)
+[![Maven Central](https://img.shields.io/maven-central/v/com.mitchseymour/ksql-udf-dialogflow.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.mitchseymour%22%20AND%20a:%22ksql-udf-dialogflow%22)
 
 # Dialogflow
 The `DIALOGFLOW` UDF uses [Google Dialogflow][dialogflow] for building virtual assistants, intelligent chatbots, and other types of conversational interfaces.
