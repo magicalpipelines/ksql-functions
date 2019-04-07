@@ -202,6 +202,12 @@
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-dialogflow</artifactId>
             <version>0.85.0-alpha</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- Test dependencies -->
         <dependency>
