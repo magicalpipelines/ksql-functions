@@ -22,11 +22,14 @@ ksql> SHOW PROPERTIES ;
  ...
  ```
  
- # Custom functions
+# Custom functions
  Below are the custom functions that are currently available.
  
+ * [`DIALOGFLOW`][dialogflow]: build conversational interfaces (virtual assistants, intelligent chatbots, etc)
  * [`SENTIMENT`][sentiment-analysis]: perform sentiment analysis on streams of text
  * [`SUMMARY_STATS`][summary-stats]: calculate summary statistics (mean, standard deviation, sample size, etc) for streams of data.
  
+  
+ [dialogflow]: https://github.com/magicalpipelines/ksql-functions/tree/master/udf/dialogflow
  [summary-stats]: https://github.com/magicalpipelines/ksql-functions/tree/master/udaf/summary-stats
  [sentiment-analysis]: https://github.com/magicalpipelines/ksql-functions/tree/master/udf/sentiment-analysis
