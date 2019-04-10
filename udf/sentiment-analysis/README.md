@@ -7,21 +7,17 @@ The `SENTIMENT` UDF uses the Google Cloud Natural Language API to detect sentime
 - Create or select a GCP project from [Google Cloud Console][google_cloud_console]
 - Enable Cloud Natural Language API
 - Create a service account
-- Download the private key (JSON)
-- Set the following environment variable wherever your KSQL server instances are running:
-
-  ```bash
-  $ export GOOGLE_APPLICATION_CREDENTIALS=/path/to/key.json
-  ```
-- If you have [gcloud][gcloud] installed, you can easily test that the above credentials work by running:
-   ```bash
-    $ gcloud ml language analyze-sentiment --content="I love pizza"
-   ```
+- Download the private key (JSON). you will need this for the configuration step (see below)
 
 Once you've completed this list of prequisites, you can install the `SENTIMENT` analysis UDF (see below).
 
 [gcloud]: https://cloud.google.com/sdk/gcloud/
 [google_cloud_console]: https://console.cloud.google.com
+
+# Configuration
+The following configs should be added to your KSQL server.properties file.
+
+- `ksql.functions.sentiment.credentials.file`: a path to the file containing your GCP service account credentials
 
 # Installation
 Download the [JAR][jar] from Maven Central and copy it to the KSQL extension directory (see [here][main-readme] for more details).
