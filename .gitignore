@@ -7,4 +7,5 @@ dist/
 .classpath
 .project
 .settings
+.vscode
 .DS_Store
