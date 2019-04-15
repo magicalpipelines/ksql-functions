@@ -25,12 +25,13 @@ ksql> SHOW PROPERTIES ;
 # Custom functions
  Below are the custom functions that are currently available.
  
+ * [`COLOR_TO_HEX`][color-to-hex]: experimental polyglot (ruby) UDF that converts colors to hex strings
  * [`DIALOGFLOW`][dialogflow]: build conversational interfaces (virtual assistants, intelligent chatbots, etc)
- * [`PREDICT_SPAM`][predict-spam]: predict whether or not a string of text is spam. experimental
+ * [`PREDICT_SPAM`][predict-spam]: experimental UDF that predicts whether or not a string of text is spam
  * [`SENTIMENT`][sentiment-analysis]: perform sentiment analysis on streams of text
  * [`SUMMARY_STATS`][summary-stats]: calculate summary statistics (mean, standard deviation, sample size, etc) for streams of data.
  
-  
+ [color-to-hex]: https://github.com/magicalpipelines/ksql-functions/tree/master/udf/color-to-hex
  [dialogflow]: https://github.com/magicalpipelines/ksql-functions/tree/master/udf/dialogflow
  [predict-spam]: https://github.com/magicalpipelines/ksql-functions/tree/master/udf/h2o-spam-prediction
  [summary-stats]: https://github.com/magicalpipelines/ksql-functions/tree/master/udaf/summary-stats
