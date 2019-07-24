@@ -22,7 +22,7 @@ import io.confluent.ksql.function.udf.UdfParameter;;
 @UdfDescription(
     name = "sentiment",
     description = "Sentiment analysis of text",
-    version = "0.2.0",
+    version = "0.2.1",
     author = "Mitch Seymour"
 )
 public class SentimentUdf implements Configurable {
@@ -61,18 +61,25 @@ public class SentimentUdf implements Configurable {
     @UdfParameter(value = "text", description = "the text to analyze")
     final String text) {
     
-    final Document doc = Document.newBuilder()
-        .setContent(text)
-        .setType(Type.PLAIN_TEXT)
-        .build();
-
-    // Detects the sentiment of the text
-    final Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
-    
-    // Build the result object
     final Map<String, Double> result = new HashMap<>();
-    result.put("score", Double.valueOf(sentiment.getScore()));
-    result.put("magnitude", Double.valueOf(sentiment.getMagnitude()));
+    try {
+      final Document doc = Document.newBuilder()
+      .setContent(text)
+      .setType(Type.PLAIN_TEXT)
+      .build();
+
+      // Detects the sentiment of the text
+      final Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
+
+      // Build the result object
+      result.put("score", Double.valueOf(sentiment.getScore()));
+      result.put("magnitude", Double.valueOf(sentiment.getMagnitude()));
+      result.put("success", 1.0);
+    } catch (Exception e) {
+      result.put("score", 0.0);
+      result.put("magnitude", 0.0);
+      result.put("success", 0.0);
+    }
     return result;
   }
 }
