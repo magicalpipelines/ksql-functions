@@ -20,7 +20,7 @@
 
     <groupId>com.mitchseymour</groupId>
     <artifactId>ksql-udf-sentiment-analysis</artifactId>
-    <version>0.2.1</version>
+    <version>0.3.0</version>
     <packaging>jar</packaging>
 
     <name>KSQL UDF for sentiment analysis</name>
@@ -202,11 +202,23 @@
             <artifactId>ksql-udf</artifactId>
             <version>${ksql.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-streams</artifactId>
+            <version>2.3.0</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- Third party -->
         <dependency>
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-language</artifactId>
             <version>1.67.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.27</version>
+            <scope>provided</scope>
         </dependency>
         <!-- Test dependencies -->
         <dependency>
