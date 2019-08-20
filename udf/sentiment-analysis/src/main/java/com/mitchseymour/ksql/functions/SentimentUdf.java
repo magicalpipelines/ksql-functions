@@ -14,10 +14,10 @@ import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.LanguageServiceSettings;
 import com.google.cloud.language.v1.Sentiment;
 
-import io.confluent.common.Configurable;
 import io.confluent.ksql.function.udf.Udf;
 import io.confluent.ksql.function.udf.UdfDescription;
-import io.confluent.ksql.function.udf.UdfParameter;;
+import io.confluent.ksql.function.udf.UdfParameter;
+import org.apache.kafka.common.Configurable;
 
 @UdfDescription(
     name = "sentiment",

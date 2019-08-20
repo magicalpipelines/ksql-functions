@@ -202,6 +202,12 @@
             <artifactId>ksql-udf</artifactId>
             <version>${ksql.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-streams</artifactId>
+            <version>2.3.0</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- Third party -->
         <dependency>
             <groupId>com.google.cloud</groupId>
