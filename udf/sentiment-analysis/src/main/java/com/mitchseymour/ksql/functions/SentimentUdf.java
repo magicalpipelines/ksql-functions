@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.language.v1.AnalyzeSentimentResponse;
 import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.Document.Type;
 import com.google.common.collect.Lists;
@@ -19,6 +20,9 @@ import io.confluent.ksql.function.udf.UdfDescription;
 import io.confluent.ksql.function.udf.UdfParameter;
 import org.apache.kafka.common.Configurable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @UdfDescription(
     name = "sentiment",
     description = "Sentiment analysis of text",
@@ -27,10 +31,18 @@ import org.apache.kafka.common.Configurable;
 )
 public class SentimentUdf implements Configurable {
   private static final String CONFIG_PREFIX = "ksql.functions.sentiment.";
+  private static final Logger log = LoggerFactory.getLogger(SentimentUdf.class);
+
+  private static final String SCORE_KEY = "score";
+  private static final String MAGNITUDE_KEY = "magnitude";
+  private static final String SUCCESS_KEY = "success";
+
   private LanguageServiceClient language;
+  private boolean configured = false;
 
   @Override
   public void configure(final Map<String, ?> map) {
+    log.info("Configuring sentiment UDF");
     LanguageServiceSettings settings;
 
     try {
@@ -50,8 +62,11 @@ public class SentimentUdf implements Configurable {
       }
       // create the client
       language = LanguageServiceClient.create(settings);
+      configured = true;
     } catch (IOException io) {
-      throw new RuntimeException("Could not create GCP Natural Language API client");
+      final String error = "Could not create GCP Natural Language API client";
+      log.error(error, io);
+      throw new RuntimeException(error);
     }
   }
 
@@ -61,6 +76,16 @@ public class SentimentUdf implements Configurable {
     @UdfParameter(value = "text", description = "the text to analyze")
     final String text) {
     
+    if (!configured) {
+      final String error =
+        String.join(
+            " ",
+            "The sentiment UDF has not been configured!",
+            "This should have happened automatically when KSQL instantiated the UDF.",
+            "This indicates a breaking change in the KSQL library");
+      log.error(error);
+      return errorResult();
+    }
     final Map<String, Double> result = new HashMap<>();
     try {
       final Document doc = Document.newBuilder()
@@ -69,17 +94,24 @@ public class SentimentUdf implements Configurable {
       .build();
 
       // Detects the sentiment of the text
-      final Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
-
+      final AnalyzeSentimentResponse response = language.analyzeSentiment(doc);
+      final Sentiment sentiment = response.getDocumentSentiment();
       // Build the result object
-      result.put("score", Double.valueOf(sentiment.getScore()));
-      result.put("magnitude", Double.valueOf(sentiment.getMagnitude()));
-      result.put("success", 1.0);
+      result.put(SCORE_KEY, Double.valueOf(sentiment.getScore()));
+      result.put(MAGNITUDE_KEY, Double.valueOf(sentiment.getMagnitude()));
+      result.put(SUCCESS_KEY, 1.0);
     } catch (Exception e) {
-      result.put("score", 0.0);
-      result.put("magnitude", 0.0);
-      result.put("success", 0.0);
+      log.error("Could not detect sentiment for provided text: {}", text, e);
+      return errorResult();
     }
+    return result;
+  }
+
+  private Map<String, Double> errorResult() {
+    final Map<String, Double> result = new HashMap<>();
+    result.put(SCORE_KEY, 0.0);
+    result.put(MAGNITUDE_KEY, 0.0);
+    result.put(SUCCESS_KEY, 0.0);
     return result;
   }
 }
