@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 @UdfDescription(
     name = "sentiment",
     description = "Sentiment analysis of text",
-    version = "0.2.1",
+    version = "0.3.0",
     author = "Mitch Seymour"
 )
 public class SentimentUdf implements Configurable {
