@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
     author = "Mitch Seymour"
 )
 public class EntitySentimentUdf implements Configurable {
-  private static final String CONFIG_PREFIX = "ksql.functions.sentiment.";
+  private static final String CONFIG_PREFIX = "ksql.functions.entity_sentiment.";
   private static final Logger log = LoggerFactory.getLogger(EntitySentimentUdf.class);
 
   private static final String MENTIONS_KEY = "mentions";
@@ -113,7 +113,7 @@ public class EntitySentimentUdf implements Configurable {
       language = LanguageServiceClient.create(settings);
       configured = true;
     } catch (IOException io) {
-      final String error = "Could not create GCP Natural Language API client";
+      final String error = "Could not create GCP Natural Language API client: " + io.getMessage();
       log.error(error, io);
       throw new RuntimeException(error);
     }
