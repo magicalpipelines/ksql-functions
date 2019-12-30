@@ -161,6 +161,9 @@ public class EntitySentimentUdf implements Configurable {
     return result;
   }
 
+  /**
+   * A helper function for Kafka Streams apps that wish to leverage this KSQL UDF
+   */
   public List<EntitySentimentResult> getEntitySentimentResults(final String text) {
     List<EntitySentimentResult> results = new ArrayList<>();
     Map<String, Map<String, Double>> entityScores = getEntitySentiment(text);
